@@ -25,7 +25,6 @@ const T = {
     readingAid: "Lesehilfe", readingAidText: "Von links nach rechts: Robin startet über Savor oder das Terminal einen Agent, beide Agents lesen dieselbe Basis, Codex über generierte Spiegel. Unten läuft, was ohne Robin passiert.",
     globalScope: "global", onlyIn: p => `nur ${p}`, userOnly: "nur per /Befehl", codexToo: "auch Codex", claudeOnly: "nur Claude", usedTimes: n => `${n}× genutzt`,
     orphans: "Skill-Quellen ohne Verknüpfung", close: "Schließen", content: "Inhalt", firstLines: n => `erste ${n} Zeilen`,
-    projectWith: "mit", kpiAgents: "Agents", kpiProjects: "Projekte mit Agent-Datei", kpiSkills: "Skills", kpiHooks: "Hooks", kpiMcp: "MCP-Server", kpiAuto: "Automatiken",
     groupClaude: "CLAUDE.md", groupAgents: "AGENTS.md", groupNone: "Ohne Agent-Datei", entryRobin: "Laptop oder Handy", entrySavor: "Daemon · Relay · Workflows",
     entryTerminal: "claude / codex direkt", robinText: "Startet Gespräche, gibt Mockups, Commits und Pushes frei.",
     savorText: "Startet Agents pro Projekt, plant Workflows, zeigt die Vorschau. Unterwegs über den Relay.", terminalText: "Der direkte Weg ohne Savor.",
@@ -76,7 +75,6 @@ const T = {
     readingAid: "Reading aid", readingAidText: "Left to right: Robin starts an agent through Savor or the terminal, both agents read the same base, Codex through generated mirrors. Below runs what happens without Robin.",
     globalScope: "global", onlyIn: p => `only ${p}`, userOnly: "only via /command", codexToo: "Codex too", claudeOnly: "Claude only", usedTimes: n => `used ${n}×`,
     orphans: "Skill sources without a link", close: "Close", content: "Content", firstLines: n => `first ${n} lines`,
-    projectWith: "with", kpiAgents: "Agents", kpiProjects: "Projects with agent file", kpiSkills: "Skills", kpiHooks: "Hooks", kpiMcp: "MCP servers", kpiAuto: "Automations",
     groupClaude: "CLAUDE.md", groupAgents: "AGENTS.md", groupNone: "Without agent file", entryRobin: "Laptop or phone", entrySavor: "Daemon · relay · workflows",
     entryTerminal: "claude / codex directly", robinText: "Starts conversations, approves mockups, commits and pushes.",
     savorText: "Starts agents per project, schedules workflows, shows the preview. On the go through the relay.", terminalText: "The direct way without Savor.",
@@ -171,12 +169,6 @@ function render() {
   $("lang").textContent = t("otherLang");
   $("stamp").innerHTML = t("stamp")(fmtDate(S.generatedAt), esc(S.host));
   $("nav").innerHTML = secs().map(([id, l, c]) => `<a href="#${id}" data-id="${id}"><span>${l}</span><span class="muted">${c}</span></a>`).join("");
-
-  const withFile = S.projects.filter(p => p.agentFile).length;
-  const autoOn = S.automations.filter(a => a.enabled).length;
-  $("kpis").innerHTML = [["agents", S.agents.length, t("kpiAgents")], ["projects", withFile, t("kpiProjects")], ["skills", S.skills.length, t("kpiSkills")],
-    ["hooks", S.hooks.length, t("kpiHooks")], ["mcp", S.mcp.length, t("kpiMcp")], ["auto", autoOn, t("kpiAuto")]]
-    .map(([id, n, l]) => `<a class="card kpi" href="#${id}"><b>${n}</b><span class="muted">${l}</span></a>`).join("");
 
   $("hints").innerHTML = S.drift.length ? S.drift.map(d => { const [title, detail, where] = t("drift")[d.key](d);
     return `<div class="hint"><span class="${d.level === "warn" ? "warn" : "muted"}">${d.level === "warn" ? "●" : "○"}</span><div><b>${esc(title)}</b><div class="muted">${esc(detail)}</div><code class="muted">${esc(where)}</code></div></div>`; }).join("")
