@@ -23,24 +23,12 @@
   <section id="s-overview">
     <h2 data-i18n="overview"></h2>
     <p class="lead" data-i18n="overviewLead"></p>
-    <h3 class="sub" data-i18n="howWeWork"></h3>
-    <p class="muted" style="margin:0 0 12px" data-i18n="mapHint"></p>
-    <div class="mapwrap">
-      <div class="map" id="map"><svg class="lines" id="lines"></svg>
-        <div class="cols">
-          <div class="col"><h4 data-i18n="colEntry"></h4><div id="c0"></div></div>
-          <div class="col"><h4 data-i18n="colAgents"></h4><div id="c1"></div></div>
-          <div class="col"><h4 data-i18n="colBase"></h4><div id="c2"></div></div>
-          <div class="col"><h4 data-i18n="colWork"></h4><div id="c3"></div></div>
-        </div>
-        <div class="lane"><h4 data-i18n="colAuto"></h4><div class="row" id="c4"></div></div>
-      </div>
-      <div class="card mpanel" id="mpanel"></div>
-    </div>
-    <div class="grid2" style="margin-top:26px">
+    <div class="card status" id="status"></div>
+    <div class="grid2">
       <div><h3 class="sub" data-i18n="attention"></h3><div class="card" id="hints"></div></div>
-      <div><h3 class="sub" data-i18n="recent"></h3><div class="card" id="changes"></div></div>
+      <div><h3 class="sub" data-i18n="colAuto"></h3><div class="card" id="autoState"></div></div>
     </div>
+    <h3 class="sub" data-i18n="recent"></h3><div class="card" id="changes"></div>
   </section>
 
   <section id="s-agents"><h2 data-i18n="agents"></h2><p class="lead" data-i18n="agentsLead"></p><div class="grid2" id="agents"></div></section>
@@ -53,6 +41,22 @@
   <section id="s-mcp"><h2 data-i18n="mcp"></h2><p class="lead" data-i18n="mcpLead"></p><div class="card" style="padding:4px 8px"><table><thead><tr><th>Server</th><th data-i18n="source"></th><th data-i18n="where"></th></tr></thead><tbody id="mcp"></tbody></table></div></section>
   <section id="s-auto"><h2 data-i18n="auto"></h2><p class="lead" data-i18n="autoLead"></p><div class="card" style="padding:4px 8px;overflow-x:auto"><table><thead><tr><th data-i18n="what"></th><th data-i18n="when"></th><th class="hide-m" data-i18n="where"></th><th data-i18n="lastRun"></th></tr></thead><tbody id="auto"></tbody></table></div></section>
   <section id="s-khala"><h2>Khala</h2><p class="lead" data-i18n="khalaLead"></p><div class="kpis" id="khala" style="grid-template-columns:repeat(3,1fr)"></div><div class="card" style="margin-top:12px" id="khalaRecent"></div></section>
+  <section id="s-map">
+    <h2 data-i18n="map"></h2>
+    <p class="lead" data-i18n="mapLead"></p>
+    <div class="mapwrap">
+      <div class="map" id="map"><svg class="lines" id="lines"></svg>
+        <div class="cols">
+          <div class="col"><h4><span class="step">1</span><span data-i18n="colEntry"></span></h4><p class="colhint" data-i18n="hintEntry"></p><div id="c0"></div></div>
+          <div class="col"><h4><span class="step">2</span><span data-i18n="colAgents"></span></h4><p class="colhint" data-i18n="hintAgents"></p><div id="c1"></div></div>
+          <div class="col"><h4><span class="step">3</span><span data-i18n="colBase"></span></h4><p class="colhint" data-i18n="hintBase"></p><div id="c2"></div></div>
+          <div class="col"><h4><span class="step">4</span><span data-i18n="colWork"></span></h4><p class="colhint" data-i18n="hintWork"></p><div id="c3"></div></div>
+        </div>
+        <div class="lane"><h4><span class="step">5</span><span data-i18n="colAuto"></span></h4><p class="colhint" data-i18n="hintAuto"></p><div class="row" id="c4"></div></div>
+      </div>
+      <div class="card mpanel" id="mpanel"></div>
+    </div>
+  </section>
 
   <footer class="sender"><span class="by" data-i18n="toolBy"></span><a class="mark" href="https://pleasance.org">Pleasance</a><button class="lang" id="lang"></button></footer>
 </main>

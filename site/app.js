@@ -2,8 +2,14 @@ const T = {
   de: {
     search: "Suchen: Skill, Projekt, Hook, Regel …", overview: "Überblick", agents: "Agents", projects: "Projekte", skills: "Skills", rules: "Regeln",
     hooks: "Hooks", plugins: "Plugins", mcp: "MCP-Server", mcpNav: "MCP", auto: "Automatik", toolBy: "ein Werkzeug von", otherLang: "English",
-    overviewLead: "Wie Robin, Claude, Codex und Savor zusammenarbeiten, und was dafür eingerichtet ist.",
-    howWeWork: "So arbeiten wir zusammen", mapHint: "Einen Knoten antippen, um Verbindungen und Details zu sehen.",
+    overviewLead: "Stand der Dinge: was offen ist, was von selbst läuft und was sich zuletzt geändert hat.",
+    allGood: "Alles läuft", needsYou: n => n === 1 ? "1 Punkt braucht Aufmerksamkeit" : `${n} Punkte brauchen Aufmerksamkeit`,
+    notes: n => n === 1 ? "1 Hinweis ohne Eile" : `${n} Hinweise ohne Eile`, pausedCount: n => `${n} pausiert`, onChange: "bei Änderungen",
+    map: "Zusammenspiel", mapLead: "Wie Robin, Claude, Codex und Savor zusammenarbeiten, und was dafür eingerichtet ist.",
+    hintEntry: "Hier fängt Robin an.", hintAgents: "Arbeiten im Auftrag.", hintBase: "Lesen beide Agents.", hintWork: "Hier wird gearbeitet.",
+    hintAuto: "Läuft nach Zeitplan oder bei Änderungen, ohne Robin.",
+    howToRead: "So liest du die Karte", tapHint: "Einen Knoten antippen, um seine Verbindungen und Details zu sehen.",
+    keyLine: "Linie: startet oder liest", keyGen: "Gestrichelt: generierte Kopie für Codex, nicht von Hand ändern",
     colEntry: "Einstieg", colAgents: "Agents", colBase: "Gemeinsame Basis", colWork: "Arbeitet in", colAuto: "Läuft von selbst",
     attention: "Braucht Aufmerksamkeit", recent: "Zuletzt geändert", nothing: "Nichts offen.",
     stamp: (d, h) => `Stand: ${d}<br>von <code>${h}</code>`,
@@ -22,7 +28,7 @@ const T = {
     symlinkFor: n => `${n} ist Symlink`, importOf: n => `${n} importiert sie`, external: "verlinkt nach außen", twoFiles: "zwei getrennte Dateien",
     noFile: "Keine Agent-Datei. Hier gelten nur die globalen Regeln.", sessions: "Sessions in 30 Tagen", reads: "liest", model: "Modell", effort: "Effort", standard: "Standard",
     ideas: "Ideen", contributors: "Mitwirkende", latest: "Zuletzt", openInCatalog: "Im Katalog öffnen", showAll: "Alles zeigen", connected: "Verbunden mit",
-    readingAid: "Lesehilfe", readingAidText: "Von links nach rechts: Robin startet über Savor oder das Terminal einen Agent, beide Agents lesen dieselbe Basis, Codex über generierte Spiegel. Unten läuft, was ohne Robin passiert.",
+    steps: ["Robin startet über Savor oder das Terminal.", "Claude oder Codex übernimmt.", "Beide lesen dieselben Regeln und Skills, Codex über generierte Kopien.", "Gearbeitet wird in den Projekten, jedes mit eigener Agent-Datei.", "Darunter läuft, was ohne Robin passiert."],
     globalScope: "global", onlyIn: p => `nur ${p}`, userOnly: "nur per /Befehl", codexToo: "auch Codex", claudeOnly: "nur Claude", usedTimes: n => `${n}× genutzt`,
     orphans: "Skill-Quellen ohne Verknüpfung", close: "Schließen", content: "Inhalt", firstLines: n => `erste ${n} Zeilen`,
     groupClaude: "CLAUDE.md", groupAgents: "AGENTS.md", groupNone: "Ohne Agent-Datei", entryRobin: "Laptop oder Handy", entrySavor: "Daemon · Relay · Workflows",
@@ -52,8 +58,14 @@ const T = {
   en: {
     search: "Search: skill, project, hook, rule …", overview: "Overview", agents: "Agents", projects: "Projects", skills: "Skills", rules: "Rules",
     hooks: "Hooks", plugins: "Plugins", mcp: "MCP servers", mcpNav: "MCP", auto: "Automation", toolBy: "a tool by", otherLang: "Deutsch",
-    overviewLead: "How Robin, Claude, Codex and Savor work together, and what is set up for it.",
-    howWeWork: "How we work together", mapHint: "Tap a node to see its connections and details.",
+    overviewLead: "State of things: what is open, what runs on its own and what changed lately.",
+    allGood: "All running", needsYou: n => n === 1 ? "1 item needs attention" : `${n} items need attention`,
+    notes: n => n === 1 ? "1 note, no rush" : `${n} notes, no rush`, pausedCount: n => `${n} paused`, onChange: "on changes",
+    map: "Interplay", mapLead: "How Robin, Claude, Codex and Savor work together, and what is set up for it.",
+    hintEntry: "Where Robin starts.", hintAgents: "Do the work.", hintBase: "Read by both agents.", hintWork: "Where the work happens.",
+    hintAuto: "Runs on a schedule or on changes, without Robin.",
+    howToRead: "How to read the map", tapHint: "Tap a node to see its connections and details.",
+    keyLine: "Line: starts or reads", keyGen: "Dashed: generated copy for Codex, do not edit by hand",
     colEntry: "Entry", colAgents: "Agents", colBase: "Shared base", colWork: "Works in", colAuto: "Runs on its own",
     attention: "Needs attention", recent: "Recently changed", nothing: "Nothing open.",
     stamp: (d, h) => `Snapshot: ${d}<br>from <code>${h}</code>`,
@@ -72,7 +84,7 @@ const T = {
     symlinkFor: n => `${n} is a symlink`, importOf: n => `${n} imports it`, external: "links outside", twoFiles: "two separate files",
     noFile: "No agent file. Only the global rules apply here.", sessions: "sessions in 30 days", reads: "reads", model: "Model", effort: "Effort", standard: "default",
     ideas: "ideas", contributors: "contributors", latest: "Latest", openInCatalog: "Open in catalog", showAll: "Show all", connected: "Connected to",
-    readingAid: "Reading aid", readingAidText: "Left to right: Robin starts an agent through Savor or the terminal, both agents read the same base, Codex through generated mirrors. Below runs what happens without Robin.",
+    steps: ["Robin starts through Savor or the terminal.", "Claude or Codex takes over.", "Both read the same rules and skills, Codex through generated copies.", "The work happens in the projects, each with its own agent file.", "Below runs what happens without Robin."],
     globalScope: "global", onlyIn: p => `only ${p}`, userOnly: "only via /command", codexToo: "Codex too", claudeOnly: "Claude only", usedTimes: n => `used ${n}×`,
     orphans: "Skill sources without a link", close: "Close", content: "Content", firstLines: n => `first ${n} lines`,
     groupClaude: "CLAUDE.md", groupAgents: "AGENTS.md", groupNone: "Without agent file", entryRobin: "Laptop or phone", entrySavor: "Daemon · relay · workflows",
@@ -123,7 +135,8 @@ function cron(c) {
   if (dom !== "*" && mon !== "*") return t("once")(`${dom.padStart(2, "0")}.${mon.padStart(2, "0")}.`, time);
   return c;
 }
-function systemdWhen(a) {
+function systemdWhen(a, short) {
+  if (short && a.schedule.every(s => s.startsWith("PathChanged="))) return t("onChange");
   return a.schedule.map(s => {
     const [k, v] = s.split("=");
     if (k === "OnCalendar") { const m = v.match(/\*-\*-\* (\d\d:\d\d)/); return m ? t("daily")(m[1]) : v; }
@@ -135,14 +148,14 @@ function systemdWhen(a) {
 
 const secs = () => [["overview", t("overview"), ""], ["agents", t("agents"), S.agents.length], ["projects", t("projects"), S.projects.length],
   ["skills", t("skills"), S.skills.length], ["rules", t("rules"), S.rules.length], ["hooks", t("hooks"), S.hooks.length],
-  ["plugins", t("plugins"), S.plugins.length], ["mcp", t("mcpNav"), S.mcp.length], ["auto", t("auto"), S.automations.length], ["khala", "Khala", S.khala.ideas]];
+  ["plugins", t("plugins"), S.plugins.length], ["mcp", t("mcpNav"), S.mcp.length], ["auto", t("auto"), S.automations.length], ["khala", "Khala", S.khala.ideas], ["map", t("map"), ""]];
 
 function show() {
   const id = (location.hash || "#overview").slice(1);
   document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === "s-" + id));
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.id === id));
   $("q").value = ""; resetSearch(); closeDrawer(); scrollTo(0, 0);
-  if (id === "overview") requestAnimationFrame(() => mreset());
+  if (id === "map") requestAnimationFrame(() => mreset());
 }
 
 function openDrawer(html) {
@@ -170,6 +183,19 @@ function render() {
   $("stamp").innerHTML = t("stamp")(fmtDate(S.generatedAt), esc(S.host));
   $("nav").innerHTML = secs().map(([id, l, c]) => `<a href="#${id}" data-id="${id}"><span>${l}</span><span class="muted">${c}</span></a>`).join("");
 
+  const warns = S.drift.filter(d => d.level === "warn").length, infos = S.drift.length - warns;
+  $("status").innerHTML = `<span class="lamp ${warns ? "warn" : "ok"}"></span><div><div class="big">${warns ? t("needsYou")(warns) : t("allGood")}</div>
+    ${infos ? `<div class="muted">${t("notes")(infos)}</div>` : ""}</div>`;
+  const on = {}, paused = S.automations.filter(a => !a.enabled).length;
+  for (const a of S.automations.filter(a => a.enabled)) {
+    const sys = a.kind === "systemd", name = sys ? a.name.replace(/\.(timer|path)$/, "") : a.name, k = (sys ? "u:" : "w:") + name, o = on[k] ||= { name, when: [], bad: false, last: null };
+    o.when.push(sys ? systemdWhen(a, true) : cron(a.cron));
+    o.bad ||= sys && !!a.result && a.result !== "success";
+    if (a.lastRun > (o.last || "")) o.last = a.lastRun;
+  }
+  $("autoState").innerHTML = Object.values(on).map(o => `<div class="state"><span class="${o.bad ? "warn" : "ok"}">●</span><div><b>${esc(o.name)}</b> <span class="muted">${esc(o.when.join(" · "))}</span></div>
+      <span class="when ${o.bad ? "warn" : "muted"}">${ago(o.last)}</span></div>`).join("")
+    + (paused ? `<div class="state"><span class="off">●</span><div class="muted">${t("pausedCount")(paused)}</div><a class="when" href="#auto">${t("auto")} →</a></div>` : "");
   $("hints").innerHTML = S.drift.length ? S.drift.map(d => { const [title, detail, where] = t("drift")[d.key](d);
     return `<div class="hint"><span class="${d.level === "warn" ? "warn" : "muted"}">${d.level === "warn" ? "●" : "○"}</span><div><b>${esc(title)}</b><div class="muted">${esc(detail)}</div><code class="muted">${esc(where)}</code></div></div>`; }).join("")
     : `<p class="muted">${t("nothing")}</p>`;
@@ -243,9 +269,9 @@ function buildMap() {
     links: a.id === "claude" ? ["rules", "skills", "hooks", "plugins"] : a.id === "codex" ? ["agentsmd", "agentskills", "hooks"] : [] };
   Object.assign(N, {
     rules: { col: 2, t: t("rules"), s: t("rulesNode")(S.rules.length), list: S.rules.map(r => `${r.file} – ${r.gist}`), links: ["agentsmd"], go: "rules" },
-    agentsmd: { col: 2, t: "~/.codex/AGENTS.md", s: t("codexMirror"), d: t("codexMirrorText"), links: [] },
+    agentsmd: { col: 2, t: "~/.codex/AGENTS.md", s: t("codexMirror"), d: t("codexMirrorText"), links: [], gen: true },
     skills: { col: 2, t: t("skills"), s: t("skillsNode")(global.length), list: global.map(s => s.name), links: ["agentskills"], go: "skills" },
-    agentskills: { col: 2, t: "~/.agents/skills", s: t("skillsCopy"), d: t("skillsCopyText"), links: [] },
+    agentskills: { col: 2, t: "~/.agents/skills", s: t("skillsCopy"), d: t("skillsCopyText"), links: [], gen: true },
     hooks: { col: 2, t: t("hooks"), s: S.hooks.map(h => h.script.replace(".sh", "")).join(", "), list: S.hooks.map(h => `${h.script} – ${h.does}`), links: [], go: "hooks" },
     plugins: { col: 2, t: "Plugins + MCP", s: t("pluginsNode")(S.plugins.filter(p => p.enabled).length, S.mcp.length),
       list: S.plugins.filter(p => p.enabled).map(p => p.name).concat(S.mcp.map(m => `${m.name} (MCP)`)), links: [], go: "plugins" },
@@ -257,11 +283,11 @@ function buildMap() {
   autos.forEach((a, i) => {
     const id = "a" + i, sys = a.kind === "systemd";
     const links = !sys ? [] : a.name.startsWith("codex-sync") ? ["agentsmd", "agentskills"] : a.name.startsWith("review") ? ["g_claude", "g_agents", "g_none"] : [];
-    N[id] = { col: 4, t: sys ? a.name.replace(/\.(timer|path)$/, "") : a.name, s: sys ? systemdWhen(a) : cron(a.cron), d: sys ? a.description : a.what, links, go: "auto" };
+    N[id] = { col: 4, t: sys ? a.name.replace(/\.(timer|path)$/, "") : a.name, s: sys ? systemdWhen(a, true) : cron(a.cron), d: sys ? a.description : a.what, links, go: "auto" };
   });
   for (const c of [0, 1, 2, 3, 4]) $("c" + c).innerHTML = "";
   for (const [id, n] of Object.entries(N)) $("c" + n.col).insertAdjacentHTML("beforeend",
-    `<div class="node" id="n-${id}" onclick="pick('${id}')">${n.agent ? `<span class="dot ${id}"></span> ` : ""}<b>${esc(n.t)}</b><br><small>${esc(n.s)}</small></div>`);
+    `<div class="node${n.gen ? " gen" : ""}" id="n-${id}" onclick="pick('${id}')">${n.agent ? `<span class="dot ${id}"></span> ` : ""}<b>${esc(n.t)}</b><br><small>${esc(n.s)}</small></div>`);
   edges = [];
   for (const [a, n] of Object.entries(N)) n.links.forEach(b => N[b] && edges.push([a, b]));
 }
@@ -295,7 +321,11 @@ function pick(id) {
 }
 function mreset() {
   document.querySelectorAll(".node").forEach(e => e.classList.remove("sel", "hl")); $("map").classList.remove("dim"); draw();
-  $("mpanel").innerHTML = `<h3 style="font-size:22px;margin-bottom:8px">${t("readingAid")}</h3><p class="muted">${t("readingAidText")}</p>`;
+  $("mpanel").innerHTML = `<h3 style="font-size:22px;margin-bottom:8px">${t("howToRead")}</h3>
+    <ol class="legend">${t("steps").map((s, i) => `<li><span class="step">${i + 1}</span><span>${s}</span></li>`).join("")}</ol>
+    <div class="key"><i style="height:2px;background:rgba(255,255,255,.3)"></i>${t("keyLine")}</div>
+    <div class="key"><i style="border:1px dashed var(--muted)"></i>${t("keyGen")}</div>
+    <p class="muted" style="margin:14px 0 0">${t("tapHint")}</p>`;
 }
 
 // ---------- search ----------
@@ -304,13 +334,13 @@ function resetSearch() { document.querySelectorAll("section tr, section .card, s
 $("q").addEventListener("input", e => {
   const q = e.target.value.toLowerCase(); resetSearch();
   if (!q) return show();
-  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id !== "s-overview"));
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id !== "s-overview" && s.id !== "s-map"));
   document.querySelectorAll("section:not(#s-overview) tbody tr, section:not(#s-overview) .grid2 > .card, #khalaRecent .hint")
     .forEach(el => el.style.display = el.textContent.toLowerCase().includes(q) ? "" : "none");
 });
 
 $("lang").onclick = () => { lang = lang === "de" ? "en" : "de"; localStorage.setItem("lang", lang); render(); };
 addEventListener("hashchange", show);
-addEventListener("resize", () => { if ((location.hash || "#overview") === "#overview") draw(document.querySelector(".node.sel")?.id.slice(2)); });
+addEventListener("resize", () => { if (location.hash === "#map") draw(document.querySelector(".node.sel")?.id.slice(2)); });
 addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
 fetch("data.json", { cache: "no-store" }).then(r => r.json()).then(d => { S = d; render(); });
