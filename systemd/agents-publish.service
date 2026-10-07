@@ -1,0 +1,8 @@
+[Unit]
+Description=Publish the agent setup dashboard to agents.pleasance.org
+
+[Service]
+Type=oneshot
+Environment=PATH=%h/.local/bin:%h/.npm-global/bin:%h/.opencode/bin:/usr/local/bin:/usr/bin:/bin
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+ExecStart=%h/dev/agents/publish.sh

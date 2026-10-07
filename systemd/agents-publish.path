@@ -1,0 +1,13 @@
+[Unit]
+Description=Republish the agent dashboard when rules, skills or agent settings change
+
+[Path]
+PathChanged=%h/.claude/rules
+PathChanged=%h/.claude/skills
+PathChanged=%h/.skills
+PathChanged=%h/.claude/settings.json
+PathChanged=%h/.claude/plugins/installed_plugins.json
+PathChanged=%h/.codex/config.toml
+
+[Install]
+WantedBy=default.target

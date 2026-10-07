@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Agents</title>
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside>
+  <a class="brand" href="#overview" style="padding:0 6px 16px;text-decoration:none;color:inherit">
+    <span class="tile"><img src="icon.svg" alt="" width="34" height="34"></span><b>Agents</b>
+  </a>
+  <nav id="nav"></nav>
+  <div class="stamp" id="stamp"></div>
+</aside>
+<main>
+  <div class="top"><input id="q" type="search" data-i18n-placeholder="search"></div>
+
+  <section id="s-overview">
+    <h2 data-i18n="overview"></h2>
+    <p class="lead" data-i18n="overviewLead"></p>
+    <h3 class="sub" data-i18n="howWeWork"></h3>
+    <p class="muted" style="margin:0 0 12px" data-i18n="mapHint"></p>
+    <div class="mapwrap">
+      <div class="map" id="map"><svg class="lines" id="lines"></svg>
+        <div class="cols">
+          <div class="col"><h4 data-i18n="colEntry"></h4><div id="c0"></div></div>
+          <div class="col"><h4 data-i18n="colAgents"></h4><div id="c1"></div></div>
+          <div class="col"><h4 data-i18n="colBase"></h4><div id="c2"></div></div>
+          <div class="col"><h4 data-i18n="colWork"></h4><div id="c3"></div></div>
+        </div>
+        <div class="lane"><h4 data-i18n="colAuto"></h4><div class="row" id="c4"></div></div>
+      </div>
+      <div class="card mpanel" id="mpanel"></div>
+    </div>
+    <div class="kpis" id="kpis" style="margin-top:18px"></div>
+    <div class="grid2" style="margin-top:26px">
+      <div><h3 class="sub" data-i18n="attention"></h3><div class="card" id="hints"></div></div>
+      <div><h3 class="sub" data-i18n="recent"></h3><div class="card" id="changes"></div></div>
+    </div>
+  </section>
+
+  <section id="s-agents"><h2 data-i18n="agents"></h2><p class="lead" data-i18n="agentsLead"></p><div class="grid2" id="agents"></div></section>
+  <section id="s-projects"><h2 data-i18n="projects"></h2><p class="lead" data-i18n="projectsLead"></p>
+    <div class="card" style="padding:4px 8px;overflow-x:auto"><table><thead><tr><th data-i18n="project"></th><th data-i18n="agentFile"></th><th class="hide-m" data-i18n="lines"></th><th data-i18n="nightReview"></th><th class="hide-m">Savor</th><th class="hide-m" data-i18n="sessions30"></th></tr></thead><tbody id="projects"></tbody></table></div></section>
+  <section id="s-skills"><h2 data-i18n="skills"></h2><p class="lead" data-i18n="skillsLead"></p><div class="grid2" id="skills"></div><div id="orphans"></div></section>
+  <section id="s-rules"><h2 data-i18n="rules"></h2><p class="lead" data-i18n="rulesLead"></p><div class="card" style="padding:4px 8px"><table><tbody id="rules"></tbody></table></div></section>
+  <section id="s-hooks"><h2 data-i18n="hooks"></h2><p class="lead" data-i18n="hooksLead"></p><div class="card" style="padding:4px 8px;overflow-x:auto"><table><thead><tr><th>Hook</th><th data-i18n="when"></th><th>Agents</th><th data-i18n="what"></th></tr></thead><tbody id="hooks"></tbody></table></div></section>
+  <section id="s-plugins"><h2 data-i18n="plugins"></h2><p class="lead" data-i18n="pluginsLead"></p><div class="card" style="padding:4px 8px;overflow-x:auto"><table><thead><tr><th>Plugin</th><th data-i18n="provides"></th><th class="hide-m" data-i18n="uses"></th><th class="hide-m" data-i18n="updated"></th><th data-i18n="state"></th></tr></thead><tbody id="plugins"></tbody></table></div></section>
+  <section id="s-mcp"><h2 data-i18n="mcp"></h2><p class="lead" data-i18n="mcpLead"></p><div class="card" style="padding:4px 8px"><table><thead><tr><th>Server</th><th data-i18n="source"></th><th data-i18n="where"></th></tr></thead><tbody id="mcp"></tbody></table></div></section>
+  <section id="s-auto"><h2 data-i18n="auto"></h2><p class="lead" data-i18n="autoLead"></p><div class="card" style="padding:4px 8px;overflow-x:auto"><table><thead><tr><th data-i18n="what"></th><th data-i18n="when"></th><th class="hide-m" data-i18n="where"></th><th data-i18n="lastRun"></th></tr></thead><tbody id="auto"></tbody></table></div></section>
+  <section id="s-khala"><h2>Khala</h2><p class="lead" data-i18n="khalaLead"></p><div class="kpis" id="khala" style="grid-template-columns:repeat(3,1fr)"></div><div class="card" style="margin-top:12px" id="khalaRecent"></div></section>
+
+  <footer class="sender"><span class="by" data-i18n="toolBy"></span><a class="mark" href="https://pleasance.org">Pleasance</a><button class="lang" id="lang"></button></footer>
+</main>
+</div>
+<div class="drawer" id="drawer"></div>
+<script src="app.js"></script>
+</body>
+</html>

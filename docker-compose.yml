@@ -1,0 +1,18 @@
+# Coolify service "agents" on VPS 3 (project privat-agents). nginx serves the snapshot that
+# publish.sh copies from the laptop into the volume. Tailnet only, through the router
+# agents-tailnet in /data/coolify/proxy/dynamic/tailnet-only.yaml.
+services:
+  agents:
+    image: nginx:1.30.5-alpine
+    environment:
+      - SERVICE_URL_AGENTS_80
+    volumes:
+      - agents-site:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  agents-site:
