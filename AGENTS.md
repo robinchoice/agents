@@ -3,7 +3,7 @@
 ## Zweck & Links
 
 - Dashboard zum Agent-Setup des Laptops: https://agents.pleasance.org, nur aus dem Tailnet.
-- Coolify auf VPS 3: Projekt `privat-agents`, Dienst `agents` (nginx, Volume `agents-site`). Betrieb und DNS: `~/dev/New AI Setup/infra.md`.
+- Coolify auf VPS 3: Projekt `privat-agents`, Dienst `agents` (nginx, Volume `agents-site`). Betrieb und DNS: `~/dev/kontor/infra.md`.
 - Farbe und Zeichen nach `~/dev/starter/DESIGN.md` (Band 6,35–6,85).
 
 ## Checks

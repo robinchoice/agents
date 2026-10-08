@@ -18,7 +18,7 @@ from pathlib import Path
 
 HOME = Path.home()
 DEV = HOME / "dev"
-SETUP = DEV / "New AI Setup"
+SETUP = DEV / "kontor"
 CLAUDE = HOME / ".claude"
 CODEX = HOME / ".codex"
 SKILL_SOURCES = HOME / ".skills"
@@ -86,6 +86,16 @@ claude_settings = read_json(CLAUDE / "settings.json")
 claude_state = read_json(HOME / ".claude.json")
 codex_config = tomllib.loads((CODEX / "config.toml").read_text())
 savor_projects = {p["id"]: p["path"] for p in read_json(HOME / ".savor/state.json")["projects"]}
+# old project paths kept as symlinks in ~/dev (e.g. New AI Setup -> kontor) count for their target
+links = {str(p): str(p.resolve()) for p in DEV.iterdir() if p.is_symlink()}
+aliases = {encode_project(old): encode_project(new) for old, new in links.items()}
+
+
+def unalias(path):
+    for old, new in links.items():
+        if path == old or path.startswith(old + "/"):
+            return new + path[len(old):]
+    return path
 
 # ---------- sessions ----------
 
@@ -100,6 +110,7 @@ for d in (CLAUDE / "projects").iterdir():
     m = re.match(r"^-home-[^-]+--savor-worktrees-([0-9a-f]+)-", key)
     if m and m.group(1) in savor_projects:
         key = encode_project(savor_projects[m.group(1)])
+    key = aliases.get(key, key)
     claude_sessions[key] = claude_sessions.get(key, 0) + n
 
 codex_sessions = {}  # cwd -> count
@@ -109,7 +120,7 @@ for f in (CODEX / "sessions").rglob("*.jsonl"):
         continue
     with f.open() as fh:
         meta = json.loads(fh.readline())
-    cwd = meta.get("payload", {}).get("cwd", "")
+    cwd = unalias(meta.get("payload", {}).get("cwd", ""))
     codex_total += 1
     codex_sessions[cwd] = codex_sessions.get(cwd, 0) + 1
 
@@ -121,7 +132,8 @@ if oc_db.exists():
     for directory, n in con.execute(
         "select directory, count(*) from session where time_created > ? group by directory", (int((NOW - MONTH) * 1000),)
     ):
-        opencode_sessions[directory] = n
+        directory = unalias(directory)
+        opencode_sessions[directory] = opencode_sessions.get(directory, 0) + n
         opencode_total += n
     con.close()
 
@@ -295,7 +307,7 @@ review_repos = {}
 for line in (SETUP / "review-repos.conf").read_text().splitlines():
     if line.strip() and not line.startswith("#"):
         review_repos[line.split(" | ")[0].strip()] = True
-savor_paths = set(savor_projects.values())
+savor_paths = {unalias(p) for p in savor_projects.values()}
 
 
 def agent_file(d):
@@ -324,7 +336,7 @@ def agent_file(d):
 
 projects = []
 for d in sorted(DEV.iterdir(), key=lambda p: p.name.lower()):
-    if not d.is_dir() or d.name.startswith((".", "_")) or not (d / ".git").exists():
+    if d.is_symlink() or not d.is_dir() or d.name.startswith((".", "_")) or not (d / ".git").exists():
         continue
     project_skills = sorted({p.parent.name for p in d.glob(".claude/skills/*/SKILL.md")} | {p.parent.name for p in d.glob(".agents/skills/*/SKILL.md")})
     for name in project_skills:
